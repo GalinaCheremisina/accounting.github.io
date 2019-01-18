@@ -43,7 +43,7 @@ export class EventService{
         this.lastID ? this.lastID++ : 0;
         var updates = {};
 
-        event = {...event,...{id:this.lastID}};
+        event = {...event,...{ id : +this.lastID}};
         updates['/events/' + this.lastID] = event;
         firebase.database().ref().update(updates)
           .catch(error => console.log(error));

@@ -27,11 +27,11 @@ export class CategoriesService{
 
     /**Add a category */
     addCategory(category:Category): void {        
-        const userKey = category.id+1;
+        const userKey: number = category.id+1;
         var updates = {};
 
-        category = {...category,...{id:userKey}};
-        updates['/categories/' + userKey] = category;  
+        category = {...category,...{id : +userKey}};
+        updates['/categories/' + userKey] = category;
         firebase.database().ref().update(updates)
           .catch(error => console.log(error))
     }
