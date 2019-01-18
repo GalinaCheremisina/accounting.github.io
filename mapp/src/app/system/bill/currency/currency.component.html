@@ -15,14 +15,14 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>Euro</td>
+                        <td>USD</td>
                         <td>1</td>
-                        <td>{{currency?.date | appmoment:'YYYY-MM-DD'}}</td>
+                        <td>{{dateOfCurrency | appmoment:'YYYY-MM-DD'}}</td>
                     </tr>
                     <tr *ngFor="let cur of currencies">
                         <td>{{cur}}</td>
                         <td>{{currency?.rates[cur]}}</td>
-                        <td>{{currency?.date | appmoment:'YYYY-MM-DD'}}</td>
+                        <td>{{dateOfCurrency | appmoment:'YYYY-MM-DD'}}</td>
                     </tr>
                     </tbody>
                 </table>

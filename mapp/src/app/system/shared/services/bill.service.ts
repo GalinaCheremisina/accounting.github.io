@@ -26,6 +26,6 @@ export class BillService{
 
     /**Get currency */
     getCurrency(): Observable<any> {
-        return this._http.get(`http://data.fixer.io/api/latest?access_key=37209d49d9ab4949a703d43ecb69533b`);
+        return this._http.get(`https://openexchangerates.org/api/latest.json?app_id=58dc12228fa448bc9dcf34f00b6c6bc4`);
     }
 }

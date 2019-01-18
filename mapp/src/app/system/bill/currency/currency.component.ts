@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./currency.component.scss']
 })
 export class CurrencyComponent {
-  @Input() currency:any;
-  currencies: string[] = ['USD','RUB'];
+  @Input() currency: any;
+  @Input() dateOfCurrency: Date;
+  currencies: string[] = ['EUR','RUB'];
 }

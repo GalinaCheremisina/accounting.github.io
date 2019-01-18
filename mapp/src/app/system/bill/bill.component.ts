@@ -14,7 +14,7 @@ export class BillComponent implements OnInit,OnDestroy {
   private subscription: Subscription;
   bill: Bill;
   currency: any;
-
+  dateOfCurrency: Date;
   isLoaded = false;
 
   constructor(private _billService:BillService) {}
@@ -26,6 +26,7 @@ export class BillComponent implements OnInit,OnDestroy {
     ).subscribe((data:[Bill,any])=>{
         this.bill = data[0];
         this.currency = data[1];
+        this.dateOfCurrency = new Date(this.currency['timestamp'] * 1000);
         this.isLoaded = true;
     })
   }
