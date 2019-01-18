@@ -1,0 +1,53 @@
+<div class="modal fade in">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="closeFilter()">
+            <span>×</span>
+          </button>
+          <h4 class="modal-title">Filter</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="control-label" for="period">Choose a period</label>
+            <select class="form-control" id="period" [(ngModel)]="selectedPeriod">
+                <option 
+                  *ngFor="let p of timePeriods" 
+                  [value]="p.type">
+                  {{p.label}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Select event type</label>
+            <div>
+                <label *ngFor="let t of types">
+                  <input
+                    class="checkbox"
+                    type="checkbox"
+                    [value]="t.type"
+                    (change)="handleChangeType($event.target)">
+                  <span>{{t.label}}</span>
+                </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Select categories</label>
+            <div>
+                <label *ngFor="let c of categories">
+                  <input
+                    class="checkbox"
+                    type="checkbox"
+                    [value]="c.id"
+                    (change)="handleChangeCategory($event.target)">
+                  <span>{{c.name}}</span>
+                </label>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeFilter()">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="applyFilter()">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

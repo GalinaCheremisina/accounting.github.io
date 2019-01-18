@@ -1,0 +1,56 @@
+<div class="title-block">
+  <h3 class="title">
+    Planning page <span class="sparkline bar"></span>
+  </h3>
+</div>
+<section class="section text-center" *ngIf="!isLoaded">
+    <app-loader></app-loader>
+</section>
+<section class="section" *ngIf="isLoaded">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-header card-header-sm bordered">
+                  <div class="header-block">
+                      <h3 class="title">Outcome</h3>
+                  </div>
+                  <h5 class="planning-expenses pull-right">
+                    Total balance: 
+                      <span class="text-success">
+                          {{bill.value | number:'1.2'}}
+                      </span> <i class="fa fa-euro"></i>
+                  </h5>
+              </div>
+              <div class="card-block">
+                  <div class="row" *ngFor="let category of categories">
+                      <div class="col-xs-6">
+                          <div class="n-progress">
+                              <div 
+                                class="progress-bar {{getCategoryColor(category)}}" 
+                                [ngStyle]="{width:getCategoryPercent(category)}">
+                                  <span>{{category.name}}</span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xs-6">
+                          <p>
+                              <span class="text-{{getCategoryColor(category)}}">
+                                  {{getCategoryCost(category) | number:'1.2'}}
+                                </span>
+                              out of
+                              <span class="text-primary">
+                                  {{category.capacity | number:'1.2'}}
+                              </span>
+                              |
+                              left 
+                                <span class="text-{{getCategoryColor(category)}}">
+                                  {{(category.capacity - getCategoryCost(category)) | number:'1.2'}}
+                                </span> <i class="fa fa-euro"></i>
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

@@ -1,0 +1,17 @@
+<div class="title-block">
+  <h3 class="title pull-left">
+      Account page <span class="sparkline bar"></span>
+  </h3>
+</div>
+<section class="section">
+    <div class="row text-center" *ngIf="!isLoaded">
+      <app-loader></app-loader>
+    </div>  
+    <div class="row" *ngIf="isLoaded">
+     <app-bill-card 
+      [bill]="bill" 
+      [currency]="currency"></app-bill-card>
+     <app-currency 
+      [currency]="currency"></app-currency>
+    </div>
+</section>

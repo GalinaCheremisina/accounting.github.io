@@ -1,0 +1,67 @@
+<section class="section">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bordered">
+                    <div class="header-block">
+                        <h3 class="title">List of events</h3>
+                    </div>
+                    <div class="form-inline pull-right m-r-2">
+                        <div class="form-group">
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="{{searchPlaceholder}}"
+                                [(ngModel)]="searchValue">
+                        </div>
+                        <div 
+                            appDropdown 
+                            class="btn-group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle ">
+                                Param
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" (click)="changeFind('amount')">Amount</a>
+                                <a class="dropdown-item" (click)="changeFind('date')">Date</a>
+                                <a class="dropdown-item" (click)="changeFind('catname')">Category</a>
+                                <a class="dropdown-item" (click)="changeFind('type')">Type</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th class="text-lg-center"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let event of events | appsearch:searchValue:searchField; let idx = index">
+                            <th scope="row">{{idx+1}}</th>
+                            <td>{{ event.amount | number:'1.2' }}</td>
+                            <td>{{ event.date | appmoment:'DD.MM.YYYY HH:mm:ss'}}</td>
+                            <td>{{ event.catname }}</td>
+                            <td>
+                                <span class="label label-danger" [ngClass]="getEventClass(event)">
+                                    {{event.type}}
+                                </span>
+                            </td>
+                            <td class="text-lg-center">
+                                <a
+                                    [routerLink]="['/system/history/', event.id ]"
+                                    class="btn btn-primary-outline">Open</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>

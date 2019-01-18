@@ -1,0 +1,44 @@
+<div class="col col-xs-12 col-sm-12 col-md-6 col-xl-5 stats-col">
+    <div class="card stats" style="height: 291px;">
+        <div class="card-block">
+            <div class="title-block">
+                <h4 class="title">Bill</h4>
+            </div>
+            <div class="row row-sm stats-container">
+                <div class="col-xs-12 stat-col">
+                    <div class="stat-icon"><i class="fa fa-euro"></i></div>
+                    <div class="stat">
+                        <div class="value">{{bill.value | number:'1.2'}}</div>
+                    </div>
+                    <progress class="progress stat-progress" value="100" max="100">
+                        <div class="progress">
+                            <span class="progress-bar" style="width: 100%;"></span>
+                        </div>
+                    </progress>
+                </div>
+                <div class="col-xs-12 stat-col">
+                    <div class="stat-icon"><i class="fa fa-dollar"></i></div>
+                    <div class="stat">
+                        <div class="value">{{dollar | number:'1.1-2'}}</div>
+                    </div>
+                    <progress class="progress stat-progress" value="100" max="100">
+                        <div class="progress">
+                            <span class="progress-bar" style="width: 100%;"></span>
+                        </div>
+                    </progress>
+                </div>
+                <div class="col-xs-12 stat-col">
+                    <div class="stat-icon"><i class="fa fa-rub"></i></div>
+                    <div class="stat">
+                        <div class="value">{{rub | number:'1.1-2'}}</div>
+                    </div>
+                    <progress class="progress stat-progress" value="100" max="100">
+                        <div class="progress">
+                            <span class="progress-bar" style="width: 100%;"></span>
+                        </div>
+                    </progress>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

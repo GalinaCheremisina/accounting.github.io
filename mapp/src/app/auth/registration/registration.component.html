@@ -1,0 +1,79 @@
+<h4 class="text-xs-center">Sign Up</h4>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div 
+        [ngClass]="{'has-error' : form.get('email').invalid && form.get('email').touched}"
+        class="form-group">
+        <label for="email">Email</label>
+        <input
+            type="text"
+            class="form-control underlined"
+            id="email"
+            autocomplete="username"
+            placeholder="Enter Email"
+            formControlName="email">
+        <span 
+            *ngIf="form.get('email').invalid && form.get('email').touched"
+            class="form-help-text">
+                <span *ngIf="form.get('email')['errors']['required']">Email must not be empty</span>
+                <span *ngIf="form.get('email')['errors']['email']">Email isn't correct</span>
+        </span>
+    </div>
+    <div
+        [ngClass]="{'has-error' : form.get('password').invalid && form.get('password').touched}"
+        class="form-group">
+        <label for="password">Password</label>
+        <input
+            type="password"
+            class="form-control underlined"
+            id="password"
+            autocomplete="new-password"
+            placeholder="Password"
+            formControlName="password">
+        <span 
+            *ngIf="form.get('password').invalid && form.get('password').touched"
+            class="form-help-text">
+                <span *ngIf="form.get('password')['errors']['required']">Password must not be empty</span>
+                <span *ngIf="form.get('password')['errors']['minlength'] && form.get('password')['errors']['minlength']['requiredLength']">
+                    Password must be more than {{form.get('password')['errors']['minlength']['requiredLength']}} characters
+                </span>
+        </span>
+    </div>
+    <div
+        [ngClass]="{'has-error' : form.get('name').invalid && form.get('name').touched}"
+        class="form-group">
+        <label for="name">Name</label>
+        <input
+            type="text"
+            class="form-control underlined"
+            id="name"
+            placeholder="Enter Name"
+            formControlName="name">
+        <span 
+            *ngIf="form.get('name').invalid && form.get('name').touched"
+            class="form-help-text">
+                Name must not be empty
+        </span>
+    </div>
+    <div class="form-group">
+        <label for="agree">
+            <input 
+                class="checkbox" 
+                id="agree" 
+                type="checkbox"
+                formControlName="agree">
+            <span>Agree with the rules</span>
+        </label>
+    </div>
+    <div class="form-group">
+        <button 
+            [disabled]="form.invalid"
+            type="submit" 
+            class="btn btn-block btn-primary">Sign Up</button>
+    </div>
+    <div class="form-group">
+        <p class="text-muted text-xs-center">
+            Already have an account? 
+            <a routerLink="/login">Sing In.</a>
+        </p>
+    </div>
+</form>

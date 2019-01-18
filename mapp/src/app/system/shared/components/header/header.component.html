@@ -1,0 +1,29 @@
+<header class="header">
+  <div class="header-block header-block-search">
+     {{date | date:'dd.MM.yyyy'}}
+  </div>
+  <div class="header-block header-block-nav">
+      <ul class="nav-profile">
+          <li appDropdown class="profile dropdown">
+              <a class="nav-link dropdown-toggle" role="button">
+                  <span class="name">
+                      Hello, {{user?.name}}
+                  </span>
+              </a>
+              <div class="dropdown-menu profile-dropdown-menu">
+                  <a 
+                    [routerLink] = "['/system','records']"
+                    class="dropdown-item">
+                      <i class="fa fa-gear icon"></i>
+                      Create a new record</a>
+                  <div class="dropdown-divider"></div>
+                  <a 
+                    (click)="onLogout()"
+                    class="dropdown-item">
+                      <i class="fa fa-power-off icon"></i>
+                      Sing out</a>
+              </div>
+          </li>
+      </ul>
+  </div>
+</header>

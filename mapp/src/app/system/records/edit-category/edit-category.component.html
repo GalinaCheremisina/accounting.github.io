@@ -1,0 +1,71 @@
+<div class="card">
+        <div class="card-header bordered">
+            <div class="header-block">
+                <h3 class="title">Edit category</h3>
+            </div>
+        </div> 
+        <div class="card-block">
+            <div
+              @fade
+              class="alert alert-{{message.type}}"
+              *ngIf="message.text">
+              {{message.text}}
+            </div>
+            <form #editForm="ngForm" (ngSubmit)="onSubmit(editForm)">
+                <div class="form-group">
+                    <label class="control-label" for="e-category">Select category</label>
+                    <select 
+                        class="form-control" 
+                        id="e-category"
+                        [(ngModel)]="currentCategoryID"
+                        [ngModelOptions]="{standalone:true}"
+                        (change)="onCategoryChange()">
+                        <option 
+                            *ngFor="let category of categories"
+                            [value]="category.id">
+                                {{category.name}}
+                        </option>
+                    </select>
+                </div>
+                <div 
+                    [ngClass]="{'has-error':ename.invalid && ename.touched}"
+                    class="form-group ">
+                    <label class="control-label" for="category-name">Enter name</label>
+                    <input 
+                        type="text" 
+                        id="e-category-name" 
+                        class="form-control"
+                        required
+                        #ename="ngModel"
+                        name="ename"
+                        [ngModel]="currentCategory.name">
+                    <span 
+                        *ngIf="ename.invalid && ename.touched"
+                        class="form-help-text">
+                        Name is required</span>
+                </div>
+                <div
+                    [ngClass]="{'has-error':ecapacity.invalid && ecapacity.touched}"
+                    class="form-group ">
+                    <label class="control-label" for="category-value">Enter limit</label>
+                    <input 
+                        type="number"
+                        id="e-category-value" 
+                        class="form-control"
+                        [ngModel]="currentCategory.capacity"
+                        #ecapacity="ngModel"
+                        name="ecapacity"
+                        required
+                        min="1">
+                    <span
+                    *ngIf="ecapacity.invalid && ecapacity.touched"
+                    class="form-help-text">Limit is required</span>
+                </div>
+                <button 
+                    [disabled]="editForm.invalid"
+                    type="submit" 
+                    class="btn btn-primary">
+                    Edit</button>
+            </form>
+        </div>
+    </div>

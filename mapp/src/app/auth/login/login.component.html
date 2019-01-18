@@ -1,0 +1,62 @@
+<h4 class="text-xs-center">Sign in</h4>
+<div 
+    @fade
+    class="alert alert-success" 
+    *ngIf="singUpOk">
+    You can login</div>
+<div 
+    @fade
+    class="alert alert-warning" 
+    *ngIf="!formValid">
+    Login or password is incorrect</div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div 
+      class="form-group"
+      [ngClass]="{'has-error': form.get('email').invalid && form.get('email').touched }">
+        <label for="email">Email</label>
+        <input
+            type="text"
+            class="form-control underlined"
+            id="email"
+            placeholder="Enter Email"
+            autocomplete="username"
+            formControlName="email">
+        <span
+          class="form-help-text"
+          *ngIf="form.get('email').invalid && form.get('email').touched">
+          <span *ngIf="form.get('email')['errors']['required']">Email must not be empty</span>
+          <span *ngIf="form.get('email')['errors']['email']">Email isn't correct</span>
+        </span>
+    </div>
+    <div
+    class="form-group"
+    [ngClass]="{'has-error': form.get('password').invalid && form.get('password').touched }">
+        <label for="password">Password</label>
+        <input
+            type="password"
+            class="form-control underlined"
+            placeholder="Password"
+            id="password"
+            autocomplete="current-password"
+            formControlName="password">
+        <span
+          class="form-help-text"
+          *ngIf="form.get('password').invalid && form.get('password').touched">
+          <span *ngIf="form.get('password')['errors']['required']">Password must not be empty</span>
+          <span *ngIf="form.get('password')['errors']['minlength'] && form.get('password')['errors']['minlength']['requiredLength']">
+            Password must be more than {{form.get('password')['errors']['minlength']['requiredLength']}} characters
+          </span>
+        </span>
+    </div>
+    <div class="form-group">
+        <button 
+          [disabled]="form.invalid"
+          type="submit" 
+          class="btn btn-block btn-primary">Sign in</button>
+    </div>
+    <div class="form-group">
+        <p class="text-muted text-xs-center">
+          No account? <a routerLink="/registration">Create an account.</a>
+        </p>
+    </div>
+</form>
