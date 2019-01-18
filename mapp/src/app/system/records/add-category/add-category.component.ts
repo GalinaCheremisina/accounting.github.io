@@ -4,11 +4,13 @@ import { NgForm } from '@angular/forms';
 import { CategoriesService } from '../../shared/services/categories.service';
 import { Category } from '../../shared/models/category.model';
 import { Message } from 'src/app/shared/models/message.model';
+import { fadeStateTrigger } from 'src/app/shared/animations/fade.animation';
 
 @Component({
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
-  styleUrls: ['./add-category.component.scss']
+  styleUrls: ['./add-category.component.scss'],
+  animations: [fadeStateTrigger]
 })
 export class AddCategoryComponent implements OnInit {
 
@@ -36,7 +38,7 @@ export class AddCategoryComponent implements OnInit {
     formAdd.resetForm();
     formAdd.controls['capacity'].setValue(1);
     this.onCategoryAdd.emit(category);
-    this.message.text = 'Категория успешно added.';
+    this.message.text = 'Category is added.';
     window.setTimeout(() => this.message.text = '', 5000);
   }
 }
