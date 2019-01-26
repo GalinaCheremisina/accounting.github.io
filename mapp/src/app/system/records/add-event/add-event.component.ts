@@ -43,9 +43,9 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   /**Submit form */
   onSubmit(form: NgForm): void {
-    let {amount,category,type,description,} = form.value;
+    let {amount,category,type,description} = form.value;
     if(amount<0) amount*= -1;
-    const catname = this.categories.filter((value)=> value.id===category)[0].name;
+    const catname = this.categories.filter((value)=> value.id === +category)[0].name;
     const event = new EventRecord(
       +amount, +category, description, type, moment().format('DD.MM.YYYY HH:mm:ss'),0,catname
     );
