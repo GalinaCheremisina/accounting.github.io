@@ -1,0 +1,96 @@
+{
+  "configVersion": 1,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/favicon.ico",
+        "/index.html"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/96.png",
+        "/assets/Money.jpg",
+        "/assets/account-144.png",
+        "/assets/account-32.png",
+        "/assets/css/fonts/FontAwesome.otf",
+        "/assets/css/fonts/fontawesome-webfont.eot",
+        "/assets/css/fonts/fontawesome-webfont.svg",
+        "/assets/css/fonts/fontawesome-webfont.ttf",
+        "/assets/css/fonts/fontawesome-webfont.woff",
+        "/assets/css/fonts/fontawesome-webfont.woff2",
+        "/assets/css/theme.css",
+        "/assets/css/vendor.css",
+        "/assets/tree.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "events-api",
+      "patterns": [
+        "\\/api\\/event"
+      ],
+      "strategy": "freshness",
+      "maxSize": 100,
+      "maxAge": 86400000,
+      "timeoutMs": 10000,
+      "version": 1
+    },
+    {
+      "name": "category-api",
+      "patterns": [
+        "\\/api\\/category\\/"
+      ],
+      "strategy": "freshness",
+      "maxSize": 100,
+      "maxAge": 86400000,
+      "timeoutMs": 10000,
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "/assets/96.png": "e2823c23d3446470221feeb475d1e5f576487aaf",
+    "/assets/Money.jpg": "2efae3868e38ae663c3ceacbc5730a5d4ebd46ad",
+    "/assets/account-144.png": "49c4729bd473d05382820653cb4764547943201a",
+    "/assets/account-32.png": "850860eb6b8e7a4480373588140bebcaffcc2b84",
+    "/assets/css/fonts/FontAwesome.otf": "cde9eb92c8a3ba23d648f76ea3931511f30813f4",
+    "/assets/css/fonts/fontawesome-webfont.eot": "3e63fc9b3de4580f1f3bec0631436f755b80f167",
+    "/assets/css/fonts/fontawesome-webfont.svg": "0b42e5ee7daafb72b1237b9d5b7f5ab0775fffc7",
+    "/assets/css/fonts/fontawesome-webfont.ttf": "9088143b19979779b2116cef38b661f72d982e19",
+    "/assets/css/fonts/fontawesome-webfont.woff": "56ce13e71c2150d81bc972940584915181bd6081",
+    "/assets/css/fonts/fontawesome-webfont.woff2": "1075231650f579955905bb2f6527148a8e2b4b16",
+    "/assets/css/theme.css": "1e7f08506dce60500939fb86821fdfb6414530c1",
+    "/assets/css/vendor.css": "4f36449d0e21b3366ddea8278c0e50879265143e",
+    "/assets/tree.png": "f8ec45620187517078987bc110f3d3a19b5480ab",
+    "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "/index.html": "adee20ba97d722e13919518b0acfc5378442dd66"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

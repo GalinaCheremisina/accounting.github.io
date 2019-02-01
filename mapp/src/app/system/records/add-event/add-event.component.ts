@@ -27,11 +27,10 @@ export class AddEventComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(
-    private _eventService:EventService,
-    private _billService:BillService) { }
+    private _eventService: EventService,
+    private _billService: BillService) { }
 
   ngOnInit() {
-    this._eventService.initEvents();
     this.message = new Message('danger', '');
   }
 
@@ -43,28 +42,40 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   /**Submit form */
   onSubmit(form: NgForm): void {
-    let {amount,category,type,description} = form.value;
+    let {amount, category, type, description} = form.value;
     if(amount<0) amount*= -1;
-    const catname = this.categories.filter((value)=> value.id === +category)[0].name;
-    const event = new EventRecord(
-      +amount, +category, description, type, moment().format('DD.MM.YYYY HH:mm:ss'),0,catname
+    const categoryEvent: Category = this.categories.filter((value)=> value.id === category)[0];
+    const newEvent = new EventRecord(
+      +amount,
+      category,
+      description,
+      type,
+      moment().format('DD.MM.YYYY HH:mm:ss'),
+      '',
+      categoryEvent.name,
+      categoryEvent.creator
     );
     
     this.subscription = this._billService.getBill()
-      .subscribe((bill:Bill)=>{
+      .subscribe((bill: Bill)=>{
           let value = 0;
-          if(type==='outcome'){
-            if(amount>bill.value){
+          if(type === 'outcome'){
+            if(amount > bill.value){
               this.showMessage(`На счету недостаточно средств. Вам не хватает ${amount - bill.value}`);
               return;
-            }else{
+            } else {
               value = bill.value - amount;
             }
-          }else{
+          } else {
             value = bill.value + amount;
           }
-      this._billService.updateBill({value,currency:bill.currency});
-      this._eventService.addEvent(event);
+      this._billService.updateBill({
+        id: bill.id,
+        value: value,
+        currency: bill.currency,
+        creator: bill.creator        
+      });
+      this._eventService.addEvent(newEvent);
       form.setValue({
         amount: 1,
         description: ' ',

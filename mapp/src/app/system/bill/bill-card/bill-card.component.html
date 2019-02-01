@@ -4,7 +4,7 @@
             <div class="title-block">
                 <h4 class="title">Bill</h4>
             </div>
-            <div class="row row-sm stats-container">
+            <div class="row row-sm stats-container" *ngIf="isUserHasBill">
                 <div class="col-xs-12 stat-col">
                     <div class="stat-icon"><i class="fa fa-dollar"></i></div>
                     <div class="stat">
@@ -37,6 +37,51 @@
                             <span class="progress-bar" style="width: 100%;"></span>
                         </div>
                     </progress>
+                </div>
+            </div>
+            <div *ngIf="!isUserHasBill">
+                <div class="col-xs-12 stat-col">
+                    <form #formBill="ngForm" (ngSubmit)="onSubmit(formBill)">
+                        <div 
+                            [ngClass]="{'has-error':values.invalid && values.touched}"
+                            class="form-group ">
+                            <label class="control-label" for="values-name">Enter bill's value</label>
+                            <input 
+                                type="number" 
+                                id="values" 
+                                class="form-control"
+                                name="values"
+                                required
+                                min=1
+                                #values="ngModel"
+                                ngModel>
+                            <span 
+                                *ngIf="values.invalid && values.touched"
+                                class="form-help-text">
+                                Value is required</span>
+                        </div>
+                        <div class="form-group ">
+                            <label class="control-label">Select currency</label>
+                            <div>
+                              <select 
+                                    class="form-control" 
+                                    id="currency"
+                                    [ngModel]="0"
+                                    required
+                                    name="currency">
+                                    <option 
+                                        *ngFor="let t of currencyType"
+                                        [value]="t.type">
+                                        {{t.label}}
+                                    </option>
+                                </select>                              
+                            </div>
+                        </div>
+                        <button 
+                            [disabled]="formBill.invalid"
+                            type="submit" 
+                            class="btn btn-primary">Add</button>
+                    </form>
                 </div>
             </div>
         </div>

@@ -1,51 +1,37 @@
-import * as firebase from 'firebase';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { fromPromise } from 'rxjs/internal-compatibility';
+import { HttpClient } from '@angular/common/http';
 
 import { EventRecord } from '../models/event.model';
+import { environment } from '../../../../environments/environment';
 
+const BACKEND_URL = environment.apiUrl + "/event";
 
-export class EventService{ 
+@Injectable()
+export class EventService{
 
-    private eventAll: EventRecord[] = [];
-    private lastID: number;
-
-    /**Initialization */
-    initEvents(): void {
-        firebase.database().ref('events').orderByChild('id')
-        .once('value')
-        .then((snapshot) => {
-            this.eventAll = snapshot.val();
-            this.lastID = 
-                this.eventAll[this.eventAll.length-1] ? this.eventAll[this.eventAll.length-1].id : 0;
-        });        
-    }
+    constructor(private _http: HttpClient){}
 
     /**Get events */
     getEvents(): Observable<EventRecord[]> {
-        return Observable.of(this.eventAll)
-                .switchMap((events)=> 
-                fromPromise(firebase.database().ref('events').orderByChild('id').once('value')))
-                .map((snapshot)=> snapshot.val());
+        return this._http.get<{message: string, events: EventRecord[]}>(BACKEND_URL)
+            .map(result => result.events);
     }   
 
     /**Get event */
-    getEvent(eventId:number): Observable<EventRecord> {
-        let event:EventRecord;
-        return Observable.of(event)
-                .switchMap((events)=> 
-                fromPromise(firebase.database().ref('/events/' + eventId).once('value')))
-                .map((snapshot)=> snapshot.val());
+    getEvent(eventId: string): Observable<EventRecord> {
+        return this._http.get<EventRecord>(BACKEND_URL + '/' + eventId);
     }
 
     /**Add event */
     addEvent(event:EventRecord): void {
-        this.lastID ? this.lastID++ : 0;
-        var updates = {};
-
-        event = {...event,...{ id : +this.lastID}};
-        updates['/events/' + this.lastID] = event;
-        firebase.database().ref().update(updates)
-          .catch(error => console.log(error));
+        this._http.post<{message: string, events: EventRecord}>(BACKEND_URL, event)
+            .subscribe();
     }
+
+    /**Delete events */
+    deleteEvents(categoryId: string): void{
+        const queryParams = `?idCategory=${categoryId}`;
+        this._http.delete(BACKEND_URL + queryParams).subscribe();
+      }
 }

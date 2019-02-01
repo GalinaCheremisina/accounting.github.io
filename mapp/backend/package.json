@@ -1,0 +1,14 @@
+{
+    "name": "mapp",
+    "version": "0.0.0",
+    "private": true,
+    "dependencies": {
+      "bcryptjs": "^2.4.3",
+      "body-parser": "^1.18.3",
+      "express": "^4.16.4",
+      "jsonwebtoken": "^8.4.0",
+      "mongoose": "^5.4.7",
+      "mongoose-unique-validator": "^2.0.2",
+    }
+  }
+  

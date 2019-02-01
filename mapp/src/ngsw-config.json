@@ -1,0 +1,53 @@
+{
+    "index": "/index.html",
+    "assetGroups": [{
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/favicon.ico",
+          "/index.html"
+        ],
+        "versionedFiles": [
+          "/*.bundle.css",
+          "/*.bundle.js",
+          "/*.chunk.js"
+        ]
+      }
+    }, {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**"
+        ]
+      }
+    }],
+    "dataGroups": [
+      {
+        "name": "events-api",
+        "urls": [
+          "/api/event"
+        ],
+        "cacheConfig": {
+          "strategy": "freshness",
+          "timeout":"10s",
+          "maxAge": "1d",
+          "maxSize": 100
+        }
+      },
+      {
+        "name": "category-api",
+        "urls": [
+          "/api/category/"
+        ],
+        "cacheConfig": {
+          "strategy": "freshness",
+          "timeout":"10s",
+          "maxAge": "1d",
+          "maxSize": 100
+        }
+      }
+    ]
+  }

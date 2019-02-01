@@ -1,0 +1,43 @@
+{
+    "dir": "ltr",
+    "lang": "en",
+    "name": "Angular PWA Course",
+    "scope": "/",
+    "display": "fullscreen",
+    "start_url": "http://localhost:8080/",
+    "short_name": "Angular PWA Course",
+    "theme_color": "transparent",
+    "description": "Learn and Keep Up With The Angular Ecosystem",
+    "orientation": "any",
+    "background_color": "transparent",
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "icons": [
+      {
+        "src": "/favicon.png",
+        "sizes": "16x16"
+      },
+      {
+        "src": "/assets/account-32.png",
+        "sizes": "32x32"
+      },
+      {
+        "src": "/assets/96.png",
+        "sizes": "96x96",
+        "type": "image/png",
+        "density": "2.0"
+      },
+      {
+        "src": "/assets/tree.png",
+        "sizes": "125x125",
+        "type": "image/png",
+        "density": "2.0"
+      },
+      {
+        "src": "/assets/account-144.png",
+        "sizes": "144x144",
+        "type": "image/png",
+        "density": "2.0"
+      }
+    ]
+  }

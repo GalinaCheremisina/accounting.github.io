@@ -10,7 +10,8 @@
     <div class="row" *ngIf="isLoaded">
      <app-bill-card 
       [bill]="bill" 
-      [currency]="currency"></app-bill-card>
+      [currency]="currency"
+      (newBill)="newBill($event)"></app-bill-card>
      <app-currency 
       [currency]="currency"
       [dateOfCurrency]="dateOfCurrency"></app-currency>

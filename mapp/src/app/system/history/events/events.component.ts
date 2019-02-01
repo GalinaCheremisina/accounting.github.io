@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { EventRecord } from '../../shared/models/event.model';
 import { Category } from '../../shared/models/category.model';
@@ -8,7 +8,7 @@ import { Category } from '../../shared/models/category.model';
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss']
 })
-export class EventsComponent implements OnInit {
+export class EventsComponent {
 
   @Input() categories:Category[] = [];
   @Input() events:EventRecord[] = [];
@@ -16,12 +16,6 @@ export class EventsComponent implements OnInit {
   searchValue = '';
   searchPlaceholder = 'Amount';
   searchField = 'amount';
-
-  ngOnInit() {
-    this.events.forEach((e)=>{
-      e.catname = this.categories.find(c=>c.id===e.category).name;
-    });
-  }
 
   /**Get class for the event's block */
   getEventClass(event:EventRecord): any {

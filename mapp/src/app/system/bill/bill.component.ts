@@ -12,12 +12,13 @@ import { BillService } from '../shared/services/bill.service';
 export class BillComponent implements OnInit,OnDestroy {
 
   private subscription: Subscription;
+  private subCreateBill: Subscription;
   bill: Bill;
   currency: any;
   dateOfCurrency: Date;
   isLoaded = false;
 
-  constructor(private _billService:BillService) {}
+  constructor(private _billService: BillService) {}
 
   ngOnInit() {
     this.subscription = Observable.combineLatest(
@@ -28,10 +29,18 @@ export class BillComponent implements OnInit,OnDestroy {
         this.currency = data[1];
         this.dateOfCurrency = new Date(this.currency['timestamp'] * 1000);
         this.isLoaded = true;
-    })
+    });
+  }
+
+  newBill(bill: Bill): void {
+    this.subCreateBill = this._billService.createBill(bill)
+      .subscribe((bill: Bill)=>{
+        this.bill = bill;
+      })
   }
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
+    if(this.subCreateBill) this.subCreateBill.unsubscribe();
   }
 }

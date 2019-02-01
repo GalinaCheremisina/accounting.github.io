@@ -4,14 +4,7 @@
 
 export const environment = {
   production: false,
-  firebase: {
-    apiKey: 'AIzaSyB0u_sNc3BgNuLUQQH7llw1xFAwbCXd2ZA',
-    authDomain: 'accounting-homes.firebaseapp.com',
-    databaseURL: 'https://accounting-homes.firebaseio.com',
-    projectId: 'accounting-homes',
-    storageBucket: 'accounting-homes.appspot.com',
-    messagingSenderId: ''
-  }
+  apiUrl: "http://localhost:3000/api"
 };
 
 /*

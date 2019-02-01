@@ -22,8 +22,8 @@
                         (change)="onCategoryChange()">
                         <option 
                             *ngFor="let category of categories"
-                            [value]="category.id">
-                                {{category.name}}
+                            [value]="category?.id">
+                                {{category?.name}}
                         </option>
                     </select>
                 </div>
@@ -38,7 +38,7 @@
                         required
                         #ename="ngModel"
                         name="ename"
-                        [ngModel]="currentCategory.name">
+                        [ngModel]="currentCategory?.name">
                     <span 
                         *ngIf="ename.invalid && ename.touched"
                         class="form-help-text">
@@ -52,7 +52,7 @@
                         type="number"
                         id="e-category-value" 
                         class="form-control"
-                        [ngModel]="currentCategory.capacity"
+                        [ngModel]="currentCategory?.capacity"
                         #ecapacity="ngModel"
                         name="ecapacity"
                         required
@@ -66,6 +66,11 @@
                     type="submit" 
                     class="btn btn-primary">
                     Edit</button>
+                <button
+                    type="button" 
+                    class="btn btn-danger"
+                    (click)="deleteCategory()">
+                    Delete</button>
             </form>
         </div>
     </div>

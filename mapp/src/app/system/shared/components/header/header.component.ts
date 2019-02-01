@@ -21,9 +21,7 @@ export class HeaderComponent implements OnInit {
     private _router:Router) { }
 
   ngOnInit() {
-   this._userService.activeUser$
-    .take(1)
-    .subscribe((value)=> this.user = value);
+    this.user = this._userService.activeUser;
   }
 
   /**Sing out */

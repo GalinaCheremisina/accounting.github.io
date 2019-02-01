@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as firebase from 'firebase';
+import { SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -8,15 +8,14 @@ import * as firebase from 'firebase';
 })
 export class AppComponent implements OnInit {
 
-  private config = {
-    apiKey: 'AIzaSyB0u_sNc3BgNuLUQQH7llw1xFAwbCXd2ZA',
-    authDomain: 'accounting-homes.firebaseapp.com',
-    databaseURL: 'https://accounting-homes.firebaseio.com',
-    projectId: 'accounting-homes',
-    storageBucket: 'accounting-homes.appspot.com',
-    messagingSenderId: ''
-  };
+  constructor(private updates:  SwUpdate){}
+
   ngOnInit(){
-    firebase.initializeApp(this.config);
+    if(this.updates.isEnabled){
+      this.updates.available.subscribe((event) => {
+        this.updates.activateUpdate().then(() => document.location.reload());
+        });      
+    }
   }
+
 }

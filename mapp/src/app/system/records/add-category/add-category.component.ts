@@ -1,10 +1,11 @@
-import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { CategoriesService } from '../../shared/services/categories.service';
 import { Category } from '../../shared/models/category.model';
 import { Message } from 'src/app/shared/models/message.model';
 import { fadeStateTrigger } from 'src/app/shared/animations/fade.animation';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-add-category',
@@ -14,12 +15,13 @@ import { fadeStateTrigger } from 'src/app/shared/animations/fade.animation';
 })
 export class AddCategoryComponent implements OnInit {
 
-  @Input() lastID:number;
   @Output() onCategoryAdd = new EventEmitter<Category>();
 
   message: Message;
 
-  constructor(private _categoriesService:CategoriesService) { }
+  constructor(
+    private _categoriesService:CategoriesService,
+    private _userService: UserService) { }
 
   ngOnInit(){
     this.message = new Message('success', '');
@@ -32,12 +34,15 @@ export class AddCategoryComponent implements OnInit {
     const category = {
       name: value.name, 
       capacity: value.capacity,
-      id:this.lastID
+      id: null,
+      creator: this._userService.getUserInfo().id
     };
-    this._categoriesService.addCategory(category);
+    this._categoriesService.addCategory(category)
+      .subscribe(newCategory => {
+        this.onCategoryAdd.emit(newCategory);
+      });
     formAdd.resetForm();
     formAdd.controls['capacity'].setValue(1);
-    this.onCategoryAdd.emit(category);
     this.message.text = 'Category is added.';
     window.setTimeout(() => this.message.text = '', 5000);
   }

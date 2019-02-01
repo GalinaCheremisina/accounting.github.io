@@ -12,7 +12,7 @@ import { EventRecord } from '../../shared/models/event.model';
 })
 export class DetailComponent implements OnInit, OnDestroy {
 
-  event$: EventRecord;
+  event: EventRecord;
   subscription: Subscription;
 
   constructor(
@@ -23,7 +23,7 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.subscription = this._route.params
       .take(1)
       .mergeMap((param:Params)=> this._eventService.getEvent(param.id))
-      .subscribe((event:EventRecord)=> this.event$ = event );
+      .subscribe((event:EventRecord) => this.event = event );
   }
 
   /**Get class for the card's block */

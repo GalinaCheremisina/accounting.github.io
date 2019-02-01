@@ -21,8 +21,8 @@
                     name="category">
                     <option 
                         *ngFor="let category of categories"
-                        [value]="category.id">
-                            {{category.name}}
+                        [value]="category?.id">
+                            {{category?.name}}
                     </option>
                 </select>
             </div>
@@ -38,7 +38,7 @@
                             required
                             [ngModel]="'outcome'"
                             ngModel>
-                        <span>{{type.label}}</span>
+                        <span>{{type?.label}}</span>
                     </label>
                 </div>
             </div>

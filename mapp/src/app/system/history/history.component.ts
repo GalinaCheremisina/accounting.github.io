@@ -50,14 +50,16 @@ export class HistoryComponent implements OnInit {
   calculateChartData(): void {
     this.chartData = [];
 
-    this.categories.forEach((cat) => {
-      const catEvent = this.filteredEvents.filter((e) => e.category === cat.id && e.type === 'outcome');
+    this.categories.forEach((cat: Category) => {
+      const catEvent = this.filteredEvents.filter(
+            (e: EventRecord) => e.category === cat.id && e.type === 'outcome'
+            );
       this.chartData.push({
         name: cat.name.toUpperCase(),
-        value: catEvent.reduce((total, e) => {
+        value: catEvent.reduce((total, e: EventRecord) => {
           total += e.amount;
           return total;
-        }, 0)
+        }, 0)     
       });
     });
   }

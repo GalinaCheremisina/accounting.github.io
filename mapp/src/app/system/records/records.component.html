@@ -4,7 +4,12 @@
   </h3>
 </div>
 <section class="section text-center" *ngIf="!isLoaded">
-    <app-loader></app-loader>
+    <div class="row">
+        <div class="col-md-6">
+            <app-add-category
+                (onCategoryAdd)="newCategoryAdded($event)"></app-add-category>
+        </div>
+    </div>
 </section>
 <section class="section" *ngIf="isLoaded">
     <div class="row">
@@ -13,8 +18,7 @@
             [categories]="categories"></app-add-event>
         </div>
         <div class="col-md-6">
-            <app-add-category 
-                [lastID]="lastID" 
+            <app-add-category
                 (onCategoryAdd)="newCategoryAdded($event)"></app-add-category>
         </div>
     </div>
@@ -22,7 +26,8 @@
         <div class="col-md-6">
             <app-edit-category 
                 [categories]="categories" 
-                (onCategoryEdit)="categoryWasEdited($event)"></app-edit-category>
+                (onCategoryEdit)="categoryWasEdited($event)"
+                (onCategoryDelete)="categoryDelete($event)"></app-edit-category>
         </div>
     </div>
 </section>
