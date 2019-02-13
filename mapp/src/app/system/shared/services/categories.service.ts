@@ -27,7 +27,7 @@ export class CategoriesService{
 
     /**Add a category */
     addCategory(category:Category): void {        
-        const userKey: number = category.id+1;
+        const userKey: number = +category.id;
         var updates = {};
 
         category = {...category,...{id : +userKey}};

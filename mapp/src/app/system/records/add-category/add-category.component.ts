@@ -32,7 +32,7 @@ export class AddCategoryComponent implements OnInit {
     const category = {
       name: value.name, 
       capacity: value.capacity,
-      id:this.lastID
+      id: this.lastID + 1
     };
     this._categoriesService.addCategory(category);
     formAdd.resetForm();
