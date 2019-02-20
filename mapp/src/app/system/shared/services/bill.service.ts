@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import * as firebase from 'firebase';
 
-import { Bill } from '../models/bill.model';
+import { Bill } from '../../budget/shared/models/bill.model';
 
 @Injectable()
 export class BillService{
@@ -13,7 +13,7 @@ export class BillService{
     /**Get the bill */
     getBill(): Observable<Bill> {
         return this._http.get<Bill>('https://accounting-homes.firebaseio.com/bill.json');
-    }
+    } 
 
     /**Update the bill */
     updateBill(bill:Bill): void {

@@ -1,0 +1,35 @@
+<div class="title-block">
+  <h3 class="title">
+      <a routerLink="/system/budget/history"><i class="fa fa-arrow-left"></i></a>
+      Event from {{event$?.catname.charAt(0).toUpperCase()+event$?.catname.toLowerCase().slice(1)}}
+      <span class="sparkline bar"></span>
+  </h3>
+</div>
+<section class="section">
+  <div class="row">
+      <div class="col-xs-6 col-xs-offset-3">
+          <div [ngClass]="getClass(event$?.type)">
+              <div class="card-header">
+                  <div class="header-block">
+                      <p class="title">
+                          {{event$?.type.charAt(0).toUpperCase()+event$?.type.slice(1)}}
+                      </p>
+                  </div>
+              </div>
+              <div class="card-block">
+                  <ul>
+                      <li>Amount: <strong>{{event$?.amount | number:'1.2'}} 
+                        <i class="fa fa-dollar"></i></strong>
+                      </li>
+                      <li>Category: 
+                        <strong>
+                          {{event$?.catname.charAt(0).toUpperCase()+event$?.catname.toLowerCase().slice(1)}}
+                        </strong></li>
+                      <li>Description: <strong>{{event$?.description}}</strong></li>
+                  </ul>
+              </div>
+              <div class="card-footer">{{event$?.date | appmoment:'DD.MM.YYYY'}}</div>
+          </div>
+      </div>
+  </div>
+</section>

@@ -1,0 +1,41 @@
+<section class="section">
+  <div class="row">
+      <div class="col-md-12">
+          <div class="card">
+              <div class="card-header bordered">
+                  <div class="header-block">
+                      <h3 class="title">List of archives</h3>
+                  </div>
+              </div>
+              <div class="card-block">
+                  <table class="table table-striped">
+                      <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Period</th>
+                          <th>Income</th>
+                          <th>Outcome</th>
+                          <th class="text-lg-center"></th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let archive of archives; let idx = index">
+                          <th scope="row">{{idx+1}}</th>
+                          <td>{{ archive.datefrom | appmoment:'DD.MM.YYYY'}} - 
+                            {{ archive.dateto | appmoment:'DD.MM.YYYY'}}
+                          </td>
+                          <td>{{ archive.income | number:'1.2' }}</td>
+                          <td>{{ archive.outcome | number:'1.2' }}</td>
+                          <td class="text-lg-center">
+                              <a
+                                  [routerLink]="['/system/budget/archive/', archive.id ]"
+                                  class="btn btn-primary-outline">Open</a>
+                          </td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

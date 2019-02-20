@@ -1,0 +1,30 @@
+<div class="title-block">
+  <h3 class="title">
+    Page records <span class="sparkline bar"></span>
+  </h3>
+</div>
+<section class="section text-center" *ngIf="(dataFromStore$ | async).categories.categories.length < 0">
+    <app-loader></app-loader>
+</section>
+<section class="section">
+    <div class="row">
+        <div class="col-md-6" *ngIf="(dataFromStore$ | async).categories.categories.length > 0">
+            <app-add-event
+            [data$]="dataFromStore$"
+            (onUpdateBill)="billWasUpdeted($event)"
+            (onAddEvent)="newEventAdded($event)"></app-add-event>
+        </div>
+        <div class="col-md-6">
+            <app-add-category
+                (onCategoryAdd)="newCategoryAdded($event)"></app-add-category>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6" *ngIf="(dataFromStore$ | async).categories.categories.length > 0">
+            <app-edit-category 
+                [data$]="dataFromStore$" 
+                (onCategoryEdit)="categoryWasEdited($event)"
+                (onCategoryDelete)="categoryWasDeleted($event)"></app-edit-category>
+        </div>
+    </div>
+</section>

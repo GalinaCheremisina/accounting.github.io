@@ -15,16 +15,27 @@
       <nav class="menu">
           <ul class="nav metismenu">
               <li routerLinkActive="active">
-                  <a [routerLink]="['/system','bill']"> <i class="fa fa-building-o"></i>Bill</a>
+                    <a [routerLink]="['/system','calendar']"><i class="fa fa-calendar" aria-hidden="true"></i>Calendar</a>
               </li>
               <li routerLinkActive="active">
-                  <a [routerLink]="['/system','history']"> <i class="fa fa-flash"></i>History</a>
-              </li>
-              <li routerLinkActive="active">
-                  <a [routerLink]="['/system','planning']"> <i class="fa fa-archive"></i>Planning</a>
-              </li>
-              <li routerLinkActive="active">
-                  <a [routerLink]="['/system','records']"> <i class="fa fa-plus-square"></i>Records</a>
+                <a [routerLink]="['/system','budget']"><i class="fa fa-money" aria-hidden="true"></i>Budget</a>
+                <ul class="nav metismenu">
+                    <li routerLinkActive="active">
+                        <a [routerLink]="['/system','budget','bill']"> <i class="fa fa-building-o"></i>Bill</a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a [routerLink]="['/system','budget','history']"> <i class="fa fa-flash"></i>History</a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a [routerLink]="['/system','budget','planning']"> <i class="fa fa-archive"></i>Planning</a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a [routerLink]="['/system','budget','records']"> <i class="fa fa-plus-square"></i>Records</a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a [routerLink]="['/system','budget','archive']"> <i class="fa fa-archive"></i>Archive</a>
+                    </li>
+                </ul>
               </li>
           </ul>
       </nav>

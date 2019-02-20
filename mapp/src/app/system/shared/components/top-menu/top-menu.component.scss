@@ -1,0 +1,24 @@
+.top-menu{
+    position: absolute;
+    top: 60px;
+    left: 230px;
+    right: 0;
+    display: flex;
+    background-color: #3a4651;
+    transition: left .3s ease;
+    height: 55px;
+
+    nav{
+        width: 100%;
+    }
+
+    ul{
+        display: flex;
+        justify-content: center;
+        padding: 15px 0;
+    }
+    ul li{
+        width: 30%;
+        text-align: center;
+    }
+}

@@ -3,10 +3,14 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { Title, Meta } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
 
 import { UserService } from 'src/app/shared/services/user.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { fadeStateTrigger } from 'src/app/shared/animations/fade.animation';
+import * as fromAuth from '../store/auth.reducers';
+import { TrySignin } from '../store/auth.actions';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
   formValid = true;
-  singUpOk = false;
+  singUpOk = true;
   sub1: Subscription;
   sub2: Subscription;
   sub3: Subscription;
@@ -27,6 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private _authService: AuthService,
     private _userService: UserService,
     private _route: ActivatedRoute,
+    private _store: Store<fromAuth.State>,
     private title: Title,
     private metategs: Meta) {
       title.setTitle('Login page | Home Accounting');
@@ -55,7 +60,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   /**Submit form Sing In */
   onSubmit(): void {
     const formData = this.form.value;
-    this._authService.signinUser(formData.email,formData.password);    
+    this._store.dispatch(new TrySignin({
+                        useremail: formData.email,
+                        password: formData.password}));
+
+                        
     this.sub3 = this._userService.isAuthenticated$.subscribe((result)=> this.formValid = result );
   }
 

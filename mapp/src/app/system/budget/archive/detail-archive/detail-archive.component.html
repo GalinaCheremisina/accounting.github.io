@@ -1,0 +1,36 @@
+<div class="title-block">
+  <h3 class="title">
+      <a routerLink="/system/budget/archive"><i class="fa fa-arrow-left"></i></a>
+      Archive - {{archive.datefrom}} - {{archive.dateto}}
+      <span class="sparkline bar"></span>
+  </h3>
+</div>
+<section class="section text-center" *ngIf="!isLoaded">
+    <app-loader></app-loader>
+</section>
+<section class="section">
+  <div class="row">
+      <div class="col-xs-8 col-xs-offset-2">
+        <ngx-charts-bar-vertical
+        [results]="chartData"
+        [legend]="false"
+        [animations]="true"
+        [xAxis]="true"
+        [yAxis]="true"
+        [showGridLines]="true"
+        [roundDomains]="true">
+      </ngx-charts-bar-vertical>
+      </div>
+  </div>
+  <div class="row">
+    <ngx-datatable
+        class="material"
+        [rows]="rows"
+        [columns]="columns"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'">
+      </ngx-datatable>
+  </div>
+</section>

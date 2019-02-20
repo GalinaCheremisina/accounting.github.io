@@ -1,0 +1,11 @@
+<div class="title-block">
+  <h3 class="title">
+    Archiving page <span class="sparkline bar"></span>
+  </h3>
+</div>
+<button 
+  type="button"
+  (click)="onAddArchive()"
+  class="btn btn-primary">Create an archive</button>
+
+<app-list-archive [archives]="archives"></app-list-archive>

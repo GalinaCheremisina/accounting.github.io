@@ -15,6 +15,6 @@ export class AuthComponent implements OnInit{
     constructor(private _router:Router){}
 
     ngOnInit(){
-        this._router.navigate(['/login']);
+        this._router.navigate(['/auth/login']);
     }
 }

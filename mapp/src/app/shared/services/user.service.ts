@@ -21,7 +21,7 @@ export class UserService{
   }
 
   /**Add a new user */
-  addUser(user:User): void {
+  addUser(user:any): void {
     const userKey = firebase.database().ref().child('users').push().key;
   
     var updates = {};
