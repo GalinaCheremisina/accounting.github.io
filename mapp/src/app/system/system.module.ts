@@ -9,7 +9,6 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { HeaderComponent } from './shared/components/header/header.component';
 import { TopMenuComponent } from './shared/components/top-menu/top-menu.component';
 import { GoalModule } from './goals/goals.module';
-import { CalendarModule } from './calendar/calendar.module';
 
 @NgModule({
     declarations:[
@@ -21,7 +20,7 @@ import { CalendarModule } from './calendar/calendar.module';
     imports:[
         CommonModule,
         SharedModule,
-        CalendarModule,
+        //CalendarModule, 
         GoalModule,
         SystemRoutingModule
     ],

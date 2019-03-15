@@ -1,0 +1,109 @@
+<div class="modal fade in">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="closeForm()">
+            <span>×</span>
+          </button>
+          <h4 class="modal-title">Add event</h4>
+        </div>
+        <div class="modal-body">
+          <form class="forms" [formGroup]="addForm" (ngSubmit)="onSubmit(addForm)">
+          <div class="form-group text">
+            <div class="col-xs-12">
+              <label class="control-label lab_title" for="title">Title</label>
+              <div class="in_tit">
+                <mat-form-field>
+                  <input 
+                    matInput 
+                    type="text"
+                    formControlName="title" 
+                    required>
+                  <mat-error *ngIf="addForm.get('title').invalid">Title is required</mat-error>
+                </mat-form-field>              
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <mat-checkbox 
+                formControlName="allDay"
+                color="primary"
+                (change)="onCahgeAllDay($event)">All day</mat-checkbox>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="!isAllDay">
+              <div class="col-xs-6">
+                <label class="control-label">Start</label>
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker" formControlName="datefrom">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>                
+              </div>
+              <div class="col-xs-3 time-block">
+                  <button 
+                    type="button" 
+                    class="btn btn-time" 
+                    (click)="timeFromChange(addForm.get('timefrom').value,'up')">
+                      <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                  </button>
+                  <input 
+                    class="in-time"
+                    placeholder="__:__"
+                    matInput
+                    formControlName="timefrom">
+                  <button 
+                    type="button" 
+                    class="btn btn-time" 
+                    (click)="timeFromChange(addForm.get('timefrom').value,'down')">
+                      <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                  </button>        
+              </div>
+              <div class="col-xs-3 time-block">
+                  <button 
+                    type="button" 
+                    class="btn btn-time" 
+                    (click)="timeToChange(addForm.get('timeto').value, 'up')">
+                      <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                  </button>
+                  <input 
+                    class="in-time"
+                    placeholder="__:__"
+                    matInput
+                    formControlName="timeto">
+                  <button 
+                    type="button" 
+                    class="btn btn-time" 
+                    (click)="timeToChange(addForm.get('timeto').value, 'down')">
+                      <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                  </button>                
+              </div>
+          </div>
+          <div class="form-group">
+            <div class="col-xs-12">
+              <label class="control-label lab_title">Importance</label>
+              <mat-radio-group formControlName="importance">
+                <mat-radio-button
+                  *ngFor="let im of importance; let inx = index" 
+                  [value]="im.type"
+                  color="primary">
+                  {{im.label}}</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button 
+              type="button" 
+              class="btn btn-secondary" 
+              (click)="closeForm()">Cancel</button>
+            <button 
+              type="submit" 
+              class="btn btn-primary"
+              [disabled]="addForm.invalid">OK</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>

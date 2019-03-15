@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
 
 import { Category } from '../../shared/models/category.model';
 import { EventRecord } from '../../shared/models/event.model';
@@ -13,7 +13,8 @@ import * as fromBudget from '../../store/budget.reducers';
 @Component({
   selector: 'app-add-event',
   templateUrl: './add-event.component.html',
-  styleUrls: ['./add-event.component.scss']
+  styleUrls: ['./add-event.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddEventComponent implements OnInit, OnDestroy {
 
@@ -26,16 +27,18 @@ export class AddEventComponent implements OnInit, OnDestroy {
     {type : 'outcome', label : 'outcome'}
   ];
   message: Message;
-  subscription: Subscription;
   categories: Category[];
+  private subscription: Subscription;
 
-  constructor() { }
+  constructor(private _cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.data$.subscribe((value: fromBudget.BudgetState) =>{
-      this.categories = value.categories.categories;
-    });
     this.message = new Message('danger', '');
+    this.subscription = this.data$.subscribe((value: fromBudget.BudgetState) => {
+      this.categories = value.categories.categories;
+      this._cdr.markForCheck();
+      console.log('AddEventComponent subscribe');
+    });
   }
 
   /**Show a message */
@@ -54,7 +57,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
       +amount, catId, description, type, moment().format('DD.MM.YYYY HH:mm:ss'),'',catName
     );
     
-    this.subscription = this.data$
+    this.data$
       .map((data: fromBudget.BudgetState) => {
         return data.bill.activeBill;
       })
@@ -85,6 +88,6 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    if(this.subscription) this.subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

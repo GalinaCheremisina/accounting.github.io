@@ -1,0 +1,19 @@
+<div *ngIf="!isLoaded" class="text-center">
+    <app-loader></app-loader>
+</div>
+<div class="col-xs-12" *ngIf="isLoaded">
+  <div class="title-block">
+      <h3 class="title">
+          {{title}} <span class="sparkline bar"></span>
+      </h3>
+  </div>
+  <div [title]="title"></div>
+  <ngx-fullcalendar
+        defaultView="agendaDay" 
+        [events]="events" 
+        [options]="options"
+        (onDatesRender)="onDatesRender($event)"
+        (onDateClick)="onDateClick($event)"
+        (onEventClick)="onEventClick($event)"></ngx-fullcalendar>
+  <div #blockFormCalEvent></div>
+</div>

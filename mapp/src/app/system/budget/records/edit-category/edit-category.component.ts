@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+/**TODO */
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy, OnChanges } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { Category } from '../../shared/models/category.model';
 import { Message } from 'src/app/shared/models/message.model';
@@ -11,9 +12,10 @@ import * as fromBudget from '../../store/budget.reducers';
   selector: 'app-edit-category',
   templateUrl: './edit-category.component.html',
   styleUrls: ['./edit-category.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeStateTrigger]
 })
-export class EditCategoryComponent implements OnInit {
+export class EditCategoryComponent implements OnInit, OnDestroy {
 
   @Input() data$: Observable<fromBudget.BudgetState>;
   @Output() onCategoryEdit = new EventEmitter<Category>();
@@ -24,14 +26,18 @@ export class EditCategoryComponent implements OnInit {
   currentCategoryID = 0;
   message: Message;
 
-  constructor() { }
+  private subscription: Subscription;
+
+  constructor(private _cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.message = new Message('success', '');
-    this.data$.subscribe((value: fromBudget.BudgetState) =>{
+    this.subscription = this.data$.subscribe((value: fromBudget.BudgetState) =>{
       this.categories = value.categories.categories;
       this.currentCategory = this.categories[0];
       this.currentCategoryID = 0;
+      this._cdr.markForCheck();
+      console.log('subs EditCategoryComponent');
     });
   }
 
@@ -45,7 +51,7 @@ export class EditCategoryComponent implements OnInit {
       id: this.categories[this.currentCategoryID].id
     };
     this.onCategoryEdit.emit(category);
-    this.message.text = 'Category was edited';
+    this.message.text = 'Category was edited';//переделать
     window.setTimeout(() => this.message.text = '', 5000);
   }
 
@@ -56,5 +62,9 @@ export class EditCategoryComponent implements OnInit {
 
   onDeleteCategory(): void {
     this.onCategoryDelete.emit(this.categories[this.currentCategoryID].id);
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 }

@@ -1,5 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { SharedModule } from '../../shared/shared.module';
 import { BudgetRoutingModule } from './budget-routing.module';
@@ -21,8 +23,6 @@ import { DetailComponent } from './history/detail/detail.component';
 import { FilterComponent } from './history/filter/filter.component';
 import { ArchiveComponent } from './archive/archive.component';
 import { BudgetComponent } from './budget.component';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import { BillEffects } from './store/bill.effects';
 import { reducers } from './store/budget.reducers';
 import { CategoryEffects } from './store/categories.effects';
@@ -30,6 +30,7 @@ import { EventEffects } from './store/events.effects';
 import { ArchiveEffects } from './store/archive.effects';
 import { ListArchiveComponent } from './archive/list-archive/list-archive.component';
 import { DetailArchiveComponent } from './archive/detail-archive/detail-archive.component';
+import { InstrumentModule } from '../shared/instrument.module';
 
 @NgModule({
     declarations:[
@@ -48,15 +49,16 @@ import { DetailArchiveComponent } from './archive/detail-archive/detail-archive.
         AddEventComponent,
         PlanningComponent,
         ArchiveComponent,
-        MomentPipe,
-        SearchPipe,
         ListArchiveComponent,
-        DetailArchiveComponent
+        DetailArchiveComponent,
+        MomentPipe,
+        SearchPipe
     ],
     imports:[
         CommonModule,
         SharedModule,
-        BudgetRoutingModule,        
+        InstrumentModule,
+        BudgetRoutingModule,
         StoreModule.forFeature('budget', reducers),
         EffectsModule.forFeature([BillEffects,CategoryEffects,EventEffects,ArchiveEffects])
     ],

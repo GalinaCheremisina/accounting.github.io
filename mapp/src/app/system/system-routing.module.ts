@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SystemComponent } from './system.component';
 import { GoalsComponent } from './goals/goals.component';
-import { CalendarComponent } from './calendar/calendar.component';
 
 const routes:Routes = [
 {
@@ -11,7 +10,7 @@ const routes:Routes = [
     component: SystemComponent,
     children: [
             { path: 'budget', loadChildren:'./budget/budget.module#BudgetModule'},
-            { path: 'calendar', component: CalendarComponent},
+            { path: 'calendar', loadChildren:'./calendar/calendar.module#CalendarModule', data: { preload: true } },
             { path: 'goals', component: GoalsComponent}
         ]
   }

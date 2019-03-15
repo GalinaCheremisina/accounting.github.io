@@ -27,6 +27,7 @@ export class BillComponent implements OnInit {
               this.dateOfCurrency = new Date(this.currency['timestamp'] * 1000);
               this.isLoaded = true;
             }
-          })
+          });
+          console.log('BillComponent');
   }
 }

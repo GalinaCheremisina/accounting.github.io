@@ -23,5 +23,6 @@ export class BudgetComponent implements OnInit{
     this._route.navigate(['system','budget','bill']);
     this._store.dispatch(new CategoryAction.GetCategories());
     this._store.dispatch(new EventAction.GetEvents());
+    console.log('BudgetComponent');
   }
 }

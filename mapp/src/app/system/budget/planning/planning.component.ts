@@ -30,6 +30,7 @@ export class PlanningComponent implements OnInit, OnDestroy {
       this.events = data.events.events;
       this.isLoaded = true;      
     });
+    console.log('PlanningComponent');
   }
 
   /**Get cost of category */

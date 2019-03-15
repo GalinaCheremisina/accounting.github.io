@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
+/**TODO */
+import { Component, Output, EventEmitter, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { Category } from '../../shared/models/category.model';
@@ -9,6 +10,7 @@ import { fadeStateTrigger } from 'src/app/shared/animations/fade.animation';
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
   styleUrls: ['./add-category.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeStateTrigger]
 })
 export class AddCategoryComponent implements OnInit {
@@ -17,7 +19,7 @@ export class AddCategoryComponent implements OnInit {
 
   message: Message;
 
-  constructor() { }
+  constructor(private _cdr: ChangeDetectorRef) { }
 
   ngOnInit(){
     this.message = new Message('success', '');
@@ -36,6 +38,9 @@ export class AddCategoryComponent implements OnInit {
     formAdd.controls['capacity'].setValue(1);
     this.onCategoryAdd.emit(category);
     this.message.text = 'Category is added.';
-    window.setTimeout(() => this.message.text = '', 5000);
+    window.setTimeout(() => {
+      this.message.text = '';
+      this._cdr.detectChanges();
+    }, 5000);/// переделать
   }
 }
