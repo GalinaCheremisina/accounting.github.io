@@ -52,7 +52,7 @@ import { InstrumentModule } from '../shared/instrument.module';
         ListArchiveComponent,
         DetailArchiveComponent,
         MomentPipe,
-        SearchPipe
+        SearchPipe 
     ],
     imports:[
         CommonModule,

@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
+import * as firebase from 'firebase/app';
+import { Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import 'rxjs/add/operator/withLatestFrom';
-import { Store } from '@ngrx/store';
-import * as firebase from 'firebase/app';
-
-import { EventRecord } from '../shared/models/event.model';
-import * as EventsActions from './events.actions';
-import * as fromEvents from './events.redusers';
 import { switchMap, map, mergeMap, catchError, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { fromPromise } from 'rxjs/observable/fromPromise';
+
+import { EventRecord } from '../shared/models/event.model';
+import * as EventsActions from './events.actions';
+import * as MessageActions from '../../../store/message.actions';
 import * as fromBudget from '../store/budget.reducers';
 
 @Injectable()
@@ -86,11 +86,20 @@ export class EventEffects{
                                 id: value.id
                             }
                             }),
-                        switchMap((obj: EventRecord) => {
-                            return of({
-                                type: EventsActions.SET_EVENT,
-                                payload: obj  
-                            })
+                        mergeMap((obj: EventRecord) => {
+                            return [
+                                {
+                                    type: EventsActions.SET_EVENT,
+                                    payload: obj  
+                                },
+                                {
+                                  type: MessageActions.SUCCESS,
+                                  payload: {
+                                    type: 'SUCCESS',
+                                    text: 'Event was added'
+                                  }
+                                }
+                            ]
                         })
                     )
               })
@@ -114,26 +123,59 @@ export class EventEffects{
                   })
             );
 
-    @Effect()
+    @Effect() 
     deleteEventsAll = this.actions$
             .pipe(
                 ofType(EventsActions.DELETE_EVENTS),
-                withLatestFrom(this._store.select('budget')),
+                map((action: EventsActions.DeleteEvents) => {
+                    return action.payload
+                }),
+                withLatestFrom(
+                    this._store.select('budget')
+                        .pipe(
+                            map((state: fromBudget.BudgetState) => state.events.events)
+                        )
+                ),
                 mergeMap(([action, state]) => {
-                    state.events.events.forEach((val) => {
-                                            firebase.firestore().collection('users')
-                                            .doc('VWFdtIDHYiyExU71y8y0')
-                                            .collection('events')
-                                            .doc(val.id)
-                                            .delete();
+                    let events: EventRecord[] = state;
+
+                    if(action !== 'all') {
+                        events = events.filter((element: EventRecord) => element.category === action)
+                    }
+                            
+                    events.forEach((val) => {
+                            console.log(val);
+                            firebase.firestore().collection('users')
+                                .doc('VWFdtIDHYiyExU71y8y0')
+                                .collection('events')
+                                .doc(val.id)
+                                .delete();
                     });                      
                     return of({
-                        type: EventsActions.SET_EVENTS,
-                        payload: []
+                        type: EventsActions.DELETE_EVENTS_IN_STATE,
+                        payload: action
                     });
                   })
             );
 
+    @Effect() 
+    failWithEvent = this.actions$
+            .pipe(
+                ofType(EventsActions.FAIL),
+                map((action: EventsActions.Fail) => {
+                    return action.payload
+                }),
+                mergeMap((action: string) => {         
+                    return of({
+                        type: MessageActions.ERROR,
+                        payload: {
+                            type: 'ERROR',
+                            text: action
+                          }
+                    });
+                  })
+            );
+            
     constructor(
         private actions$: Actions,
         private _store: Store<fromBudget.BudgetState>) {}

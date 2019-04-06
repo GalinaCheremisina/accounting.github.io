@@ -3,16 +3,19 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 import { TitleDirective } from './directives/title.directive';
+import { TimeDirective } from './directives/time.directive';
 
 
 @NgModule({
     declarations: [
-        TitleDirective
+        TitleDirective,
+        TimeDirective
     ],
     exports:[
         NgxChartsModule,
         NgxDatatableModule,
-        TitleDirective
+        TitleDirective,
+        TimeDirective
     ]
 })
 export class InstrumentModule{}

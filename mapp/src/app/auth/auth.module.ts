@@ -1,22 +1,26 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from '@angular/common';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
-import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './registration/registration.component';
 import { AuthComponent } from './auth.component';
-import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { AuthFormComponent } from './auth-form/auth-form.component';
+import { AuthRoutingModule } from './auth-routing.module';
+import { authReducer } from './store/auth.reducers';
+import { AuthEffects } from './store/auth.effects';
 
 @NgModule({ 
     declarations:[
-        LoginComponent, 
-        RegistrationComponent,
-        AuthComponent
+        AuthComponent,
+        AuthFormComponent
     ],
     imports:[
         CommonModule,
         AuthRoutingModule,
-        SharedModule
+        SharedModule,
+        StoreModule.forFeature('auth', authReducer),
+        EffectsModule.forFeature([AuthEffects])
     ]
 })
 export class AuthModule{}

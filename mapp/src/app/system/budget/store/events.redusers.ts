@@ -23,7 +23,7 @@ export function eventsReduser(state = initialState, action: EventsActions.Events
                 events : [...action.payload]
             };
 
-        case (EventsActions.SET_EVENT): 
+        case (EventsActions.SET_EVENT):
             return {
                 ...state,
                 events : [...state.events, action.payload]
@@ -36,6 +36,20 @@ export function eventsReduser(state = initialState, action: EventsActions.Events
           return {
             ...state,
             events: oldEvents
+          };
+
+        case (EventsActions.DELETE_EVENTS_IN_STATE):
+          const oldsEvents = [...state.events];
+          let newEvents;
+          if(action.payload !== 'all') {
+            newEvents = oldsEvents.filter(el => el.category !== action.payload);
+          } else {
+            newEvents = [];
+          }
+          //const newEvents = oldsEvents.filter(el => el.category !== action.payload);
+          return {
+            ...state,
+            events: newEvents
           };
 
         default:

@@ -3,14 +3,13 @@
     Page records <span class="sparkline bar"></span>
   </h3>
 </div>
-<section class="section text-center" *ngIf="(dataFromStore$ | async).categories.categories.length < 0">
-    <app-loader></app-loader>
-</section>
 <section class="section">
     <div class="row">
-        <div class="col-md-6" *ngIf="(dataFromStore$ | async).categories.categories.length > 0">
+        <div class="col-md-6" *ngIf="(dataFromStore$ | async).catLength">
             <app-add-event
-            [data$]="dataFromStore$"
+            [categories]="(dataFromStore$ | async).categories"
+            [bill]="(dataFromStore$ | async).bill" 
+            (hasProblem)="onProblem($event)"
             (onUpdateBill)="billWasUpdeted($event)"
             (onAddEvent)="newEventAdded($event)"></app-add-event>
         </div>
@@ -20,9 +19,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6" *ngIf="(dataFromStore$ | async).categories.categories.length > 0">
+        <div class="col-md-6" *ngIf="(dataFromStore$ | async).catLength">
             <app-edit-category 
-                [data$]="dataFromStore$" 
+                [categories]="(dataFromStore$ | async).categories" 
                 (onCategoryEdit)="categoryWasEdited($event)"
                 (onCategoryDelete)="categoryWasDeleted($event)"></app-edit-category>
         </div>

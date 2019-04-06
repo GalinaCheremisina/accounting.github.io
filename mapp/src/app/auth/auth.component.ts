@@ -1,20 +1,9 @@
-import { Component, OnInit, HostBinding } from "@angular/core";
-import { Router } from '@angular/router';
-
-import { fadeStateTrigger } from '../shared/animations/fade.animation';
+import { Component, HostBinding } from "@angular/core";
 
 @Component({
     selector: "app-auth",
-    templateUrl: './auth.component.html',
-    animations: [fadeStateTrigger]
+    templateUrl: './auth.component.html'
 })
-export class AuthComponent implements OnInit{
-
-    @HostBinding('@fade') anim = true;
-
-    constructor(private _router:Router){}
-
-    ngOnInit(){
-        this._router.navigate(['/auth/login']);
-    }
+export class AuthComponent{
+    isLogin: boolean = true;
 }

@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SystemComponent } from './system.component';
 import { GoalsComponent } from './goals/goals.component';
 
-const routes:Routes = [
+const routes: Routes = [
 {
     path: '',
     component: SystemComponent,

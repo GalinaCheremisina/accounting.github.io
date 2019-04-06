@@ -5,12 +5,6 @@
         </div>
     </div>
     <div class="card-block">
-        <div
-          @fade
-          class="alert alert-{{message.type}}"
-          *ngIf="message.text">
-          {{message.text}}
-        </div>
         <form #form="ngForm" (ngSubmit)="onSubmit(form)">
             <div 
                 [ngClass]="{'has-error':cname.invalid && cname.touched}"

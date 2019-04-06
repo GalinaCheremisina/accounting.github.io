@@ -8,6 +8,7 @@ import 'rxjs/add/operator/do';
 import { of } from 'rxjs';
 
 import * as AuthActions from './auth.actions';
+import * as MessageActions from '../../store/message.actions';
 import { User } from 'src/app/shared/models/user.model';
 
 
@@ -16,12 +17,12 @@ export class AuthEffects{
     
     @Effect()
     authSingup = this.$actions
-        .pipe(
+      .pipe(
         ofType(AuthActions.TRY_SIGNUP),
         map((action: AuthActions.TrySignup)=>{
             return action.payload;
         }),
-        mergeMap((authData: {useremail: string, username: string, password:string})=>{
+        switchMap((authData: {useremail: string, username: string, password:string})=>{
             return fromPromise(
               firebase.auth().createUserWithEmailAndPassword(authData.useremail,authData.password))
                     .pipe(
@@ -48,7 +49,7 @@ export class AuthEffects{
                             ];
                         }),
                         catchError((error) => {
-                              return of({ type: 'FAIL', payload: error.message});
+                              return of({ type: MessageActions.ERROR, payload: error.message});
                         })
                     )
         }),
@@ -61,16 +62,16 @@ export class AuthEffects{
           map((action: AuthActions.TrySignin) => {
             return action.payload;
           }),
-          mergeMap((authData: {useremail: string, password: string}) => {
+          switchMap((authData: {useremail: string, password: string}) => {
             return fromPromise(
               firebase.auth().signInWithEmailAndPassword(authData.useremail, authData.password))
               .pipe(
-                map(()=>({useremail: authData.useremail})),
+                map(() => ({useremail: authData.useremail})),
                   mergeMap((data: {useremail: string}) => {
                     return fromPromise(firebase.auth().currentUser.getIdToken())
-                    .pipe(
-                      map((tok)=> ({token: tok, info: data})),
-                    );
+                              .pipe(
+                                map((tok) => ({token: tok, info: data})),
+                              );
                   }),          
                   mergeMap((value: {token: string, info: {useremail: string}}) => {
                     this._router.navigate(['/system']);
@@ -89,7 +90,7 @@ export class AuthEffects{
                     ];
                   }),
                 catchError((error) => {
-                      return of({ type: 'FAIL', payload: error.message});
+                      return of({ type: MessageActions.ERROR, payload: error.message});
                 })
               )
           }));
@@ -130,7 +131,9 @@ export class AuthEffects{
           map((action: AuthActions.CreateUser) => {
             return action.payload;
           }),
-          mergeMap((data: {useremail: string, username: string}) => {
+          switchMap((data: {useremail: string, username: string}) => {
+
+            firebase.firestore().collection('users-list').add({ email: data.useremail });
             
             return fromPromise(firebase.firestore().collection('users').add({
             name: data.username,
@@ -164,28 +167,10 @@ export class AuthEffects{
                     currency: "USD"
                 });
 
-/**
-            let promises = [];
-            promises.push(
-                firebase.firestore().collection('users')
-                .doc(UserID)
-                .collection('bill')
-                .doc('first')
-                .set({
-                    value: 0,
-                    currency: "USD"
-                })
-            );
-
-            Promise.all(promises).then(function() {
-                console.log("All subcollections were added!");
-                })
-                .catch(function(error){
-                console.log("Error adding subcollections to Firestore: " + error);
-                }); */
             return of(user);
           }),
           mergeMap((user: User) => {
+              this._router.navigate(['/system']);
               return [{
                 type: AuthActions.SET_USER,
                 payload: user

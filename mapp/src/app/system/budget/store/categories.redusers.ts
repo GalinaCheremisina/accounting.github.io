@@ -27,7 +27,7 @@ export function categoryReduser(state = initialState, action: CategoryActions.Ca
           const indexUpdatedCategory = state.categories.findIndex((value) => value.id === action.payload.id);
           let categoryOld = state.categories[indexUpdatedCategory];
           const updatedCategory = {
-            ...categoryOld,
+            ...categoryOld, 
             ...action.payload
           };
           const categories = [...state.categories];

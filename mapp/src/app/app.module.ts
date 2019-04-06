@@ -8,25 +8,27 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { reducers } from './store/app.reducers';
+import { MessageEffects } from './store/message.effects';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserService } from './shared/services/user.service';
-import { AuthService } from './shared/services/auth.service';
+import { AuthService } from './auth/shared/services/auth.service';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
-import { reducers } from './store/app.reducers';
 import { environment } from '../environments/environment';
-import { AuthEffects } from './auth/store/auth.effects';
 import { ErrorInterceptor } from './shared/components/error/error-interceptor';
-import { AuthGuard } from './auth/auth-guard.service';
+import { AuthGuard } from './shared/services/auth-guard.service';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ErrorComponent } from './shared/components/error/error.component';
+import { MessageComponent } from './shared/components/message/message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
     HomePageComponent,
-    ErrorComponent
+    ErrorComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -38,15 +40,18 @@ import { ErrorComponent } from './shared/components/error/error.component';
     AppRoutingModule,    
     StoreModule.forRoot(reducers),
     !environment.production ? StoreDevtoolsModule.instrument() :[],
-    EffectsModule.forRoot([AuthEffects])
+    EffectsModule.forRoot([MessageEffects])
   ],
   providers: [
     AuthService,
     UserService,
     AuthGuard,
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
-  entryComponents: [ErrorComponent],
+  entryComponents: [
+    ErrorComponent,
+    MessageComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

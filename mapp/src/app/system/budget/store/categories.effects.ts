@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import 'rxjs/add/operator/withLatestFrom';
-import { Store } from '@ngrx/store';
 import * as firebase from 'firebase/app';
 
 import { Category } from '../shared/models/category.model';
 import * as CategoryActions from './categories.actions';
-import * as fromCategory from './categories.redusers';
+import * as EventsActions from './events.actions';
+import * as MessageActions from '../../../store/message.actions';
 import { switchMap, map, mergeMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { fromPromise } from 'rxjs/observable/fromPromise';
@@ -47,7 +47,7 @@ export class CategoryEffects{
             })
         );
 
-    @Effect({dispatch: false})
+    @Effect()
     categoryUpdate = this.actions$
         .pipe(
             ofType(CategoryActions.UPDATE_CATEGORY),
@@ -58,13 +58,24 @@ export class CategoryEffects{
                 const updatedCategory: any = {
                     name: payload.name,
                     capacity: payload.capacity,
-                }
-                firebase.firestore().collection('users')
+                };
+                
+                return fromPromise( firebase.firestore().collection('users')
                     .doc('VWFdtIDHYiyExU71y8y0')
                     .collection('category')
                     .doc(payload.id)
-                    .set(updatedCategory);
-                return of(payload);
+                    .set(updatedCategory))
+            }),
+            mergeMap(() => {
+                return [
+                    {
+                      type: MessageActions.SUCCESS,
+                      payload: {
+                        type: 'SUCCESS',
+                        text: 'Category was updated'
+                      }
+                    }
+                  ];
             })
         );
 
@@ -93,31 +104,52 @@ export class CategoryEffects{
                                             id: value.id
                                         }
                                         }),
-                                    switchMap((obj: Category) => {
-                                        return of({
+                                    mergeMap((obj: Category) => {
+                                        return [
+                                            {
                                             type: CategoryActions.SET_CATEGORY,
                                             payload: obj  
-                                        })
+                                            },
+                                            {
+                                              type: MessageActions.SUCCESS,
+                                              payload: {
+                                                type: 'SUCCESS',
+                                                text: 'Category was added'
+                                              }
+                                            }
+                                        ]
                                     })
                                 )
               })
         );
         
-    @Effect({dispatch: false})
+    @Effect()
         deleteCategory = this.actions$
             .pipe(
                 ofType(CategoryActions.DELETE_CATEGORY),
                 map((action: CategoryActions.DeleteCategory) => {
                     return action.payload
                 }),
-                switchMap((caregoryId: string) => {
+                mergeMap((caregoryId: string) => {
                     firebase.firestore().collection('users')
                     .doc('VWFdtIDHYiyExU71y8y0')
                     .collection('category')
                     .doc(caregoryId)
                     .delete();         
                     
-                    return of(caregoryId);
+                    return [
+                        {
+                        type: EventsActions.DELETE_EVENTS,
+                        payload: caregoryId  
+                        },
+                        {
+                        type: MessageActions.SUCCESS,
+                        payload: {
+                            type: 'SUCCESS',
+                            text: 'Category was deleted'
+                        }
+                        }
+                    ];
                   })
             );
             

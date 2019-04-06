@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { UserService } from 'src/app/shared/services/user.service';
 import { User } from 'src/app/shared/models/user.model';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AuthService } from 'src/app/auth/shared/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
 
   /**Sing out */
   onLogout(){
-    this._authService.logout();
-    this._router.navigate(['/login']);
+    //this._authService.logout();
+    this._router.navigate(['/auth']);
   }
 }

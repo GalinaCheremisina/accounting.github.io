@@ -1,3 +1,12 @@
-<p>
-  calevent-list works!
-</p>
+<div *ngIf="!isLoaded" class="row text-center">
+  <app-loader></app-loader>
+</div>
+<div class="row" *ngIf="isLoaded">
+  <div [title]="'Calendar page'"></div>
+  <ngx-fullcalendar
+      defaultView="month" 
+      [events]="events" 
+      [options]="options"
+      (onDateClick)="onDateClick($event)"
+      (onEventClick)="onEventClick($event)"></ngx-fullcalendar>
+</div> 

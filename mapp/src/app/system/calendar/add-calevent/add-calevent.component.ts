@@ -4,7 +4,11 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import * as moment from 'moment';
 import { EventObject } from 'ngx-fullcalendar';
-import { Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import * as fromEvents from '../store/eventscalendar.redusers';
+import * as CalendarActions from '../store/eventscalendar.actions';
+import { Router } from '@angular/router';
 
 export const MY_FORMATS = {
   parse: {
@@ -30,6 +34,7 @@ export const MY_FORMATS = {
 export class AddCaleventComponent implements OnInit {
   
   eventCalc = {
+    id: null,
     title: '',
     allDay: false,
     datefrom: new Date(),
@@ -38,17 +43,17 @@ export class AddCaleventComponent implements OnInit {
     importance: ''
   };
   onVisible = new EventEmitter<boolean>();
-  newItem = new Subject<EventObject>();
-
-  isAllDay = false;
   addForm: FormGroup;
+  isAllDay = false;
   importance = [
     {type: 'l', label: 'low'},
     {type: 'av', label: 'average'},
-    {type: 'р', label: 'high'}
+    {type: 'р', label: 'high'} 
   ];
 
-  constructor() { }
+  constructor(
+    private _store: Store<fromEvents.EventsCalendarState>,
+    private _router: Router) { }
 
   ngOnInit() {
     this.addForm = new FormGroup({
@@ -62,12 +67,22 @@ export class AddCaleventComponent implements OnInit {
     });
   }
 
+  get canDelete() {
+    return !!this.eventCalc.id;
+  }
+
   closeForm(): void {
     this.onVisible.emit(false);
   }
 
+  deleteEvent() {
+    this._store.dispatch(new CalendarActions.DeleteCalEvent(this.eventCalc.id));
+    this.onVisible.emit(false);
+    this._router.navigate(['system','calendar']);
+  }
+
   onSubmit(addForm: NgForm): void {
-    console.log(addForm.value);
+    
     let start = addForm.value.datefrom.format('YYYY-MM-DD')+'T'+addForm.value.timefrom;
     let end = addForm.value.datefrom.format('YYYY-MM-DD')+'T'+addForm.value.timeto;
     let className: string;
@@ -84,9 +99,16 @@ export class AddCaleventComponent implements OnInit {
       start = addForm.value.datefrom.format('YYYY-MM-DD')+'T00:00';
       end = addForm.value.datefrom.format('YYYY-MM-DD')+'T23:55';
     }
+    
+    if(moment(addForm.value.timefrom,'HH:mm').isAfter(moment(addForm.value.timeto,'HH:mm'))) {
+      start = addForm.value.datefrom.format('YYYY-MM-DD')+'T'+addForm.value.timeto;
+      end = addForm.value.datefrom.format('YYYY-MM-DD')+'T'+addForm.value.timefrom;
+    } else if(moment(addForm.value.timefrom,'HH:mm').isSame(moment(addForm.value.timeto,'HH:mm'))) {
+      end = addForm.value.datefrom.format('YYYY-MM-DD') + 'T' + moment(addForm.value.timefrom,'HH:mm').add(5,'m').format('HH:mm');
+    }
 
     const item: EventObject = {
-      id: null,
+      id: this.eventCalc.id ? this.eventCalc.id : null,
       start,
       end,
       title: addForm.value.title,
@@ -94,9 +116,14 @@ export class AddCaleventComponent implements OnInit {
       className    
     }
     
-    console.log(item);
-    this.newItem.next(item);
+    if(item.id) {
+      this._store.dispatch(new CalendarActions.UpdateCalEvent(item));
+    } else {
+      this._store.dispatch(new CalendarActions.AddCalEvent(item));
+    }
+    
     this.onVisible.emit(false);
+    this._router.navigate(['system','calendar']);
   }
 
   onCahgeAllDay(el): void {

@@ -5,23 +5,18 @@
         </div>
     </div>
     <div class="card-block">
-        <div
-          class="alert alert-{{message.type}}"
-          *ngIf="message.text">
-          {{message.text}}
-        </div>
         <form #evForm="ngForm" (ngSubmit)="onSubmit(evForm)">
             <div class="form-group ">
                 <label class="control-label" for="category">Select a category</label>
                 <select 
                     class="form-control" 
                     id="ev-category"
-                    [ngModel]="0"
+                    [ngModel]="categories[0].id"
                     required
                     name="category">
                     <option 
-                        *ngFor="let category of categories; let i=index"
-                        [value]="i">
+                        *ngFor="let category of categories"
+                        [value]="category.id">
                             {{category.name}}
                     </option>
                 </select>

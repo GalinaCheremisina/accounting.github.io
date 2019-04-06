@@ -1,5 +1,10 @@
 import * as AuthActions from "./auth.actions";
 import { User } from 'src/app/shared/models/user.model';
+import * as fromApp from '../../store/app.reducers';
+
+export interface AuthState extends fromApp.AppState {
+    auth: State;
+}
 
 export interface State{
     token: string;
@@ -7,6 +12,7 @@ export interface State{
     user: User;
     error: string;
 }
+
 const initialState: State = {
     token: null,
     authenticated: false,

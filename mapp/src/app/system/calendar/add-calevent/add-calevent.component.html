@@ -52,7 +52,8 @@
                     class="in-time"
                     placeholder="__:__"
                     matInput
-                    formControlName="timefrom">
+                    formControlName="timefrom"
+                    timeIn>
                   <button 
                     type="button" 
                     class="btn btn-time" 
@@ -71,7 +72,8 @@
                     class="in-time"
                     placeholder="__:__"
                     matInput
-                    formControlName="timeto">
+                    formControlName="timeto"
+                    timeIn>
                   <button 
                     type="button" 
                     class="btn btn-time" 
@@ -93,6 +95,11 @@
             </div>
           </div>
           <div class="modal-footer">
+            <button 
+              type="button" 
+              class="btn btn-danger"
+              *ngIf = "canDelete"
+              (click)="deleteEvent()">Delete</button>
             <button 
               type="button" 
               class="btn btn-secondary" 

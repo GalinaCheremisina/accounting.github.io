@@ -14,7 +14,24 @@
                 </h1>
             </header>
             <div class="auth-content">
-                <router-outlet></router-outlet>
+                <app-auth-form
+                    *ngIf="isLogin"
+                    [isLogin]="isLogin">
+                        <div class="form-group info">
+                            <p class="text-muted text-xs-center">
+                              No account? <a (click)="isLogin = !isLogin">Create an account.</a>
+                            </p>
+                        </div>
+                </app-auth-form>
+                <app-auth-form
+                    *ngIf="!isLogin"
+                    [isLogin]="isLogin">
+                        <div class="form-group info">
+                            <p class="text-muted text-xs-center">
+                                Already have an account? <a (click)="isLogin = !isLogin">Sing In.</a>
+                            </p>
+                        </div>
+                </app-auth-form>
             </div>
         </div>
     </div>

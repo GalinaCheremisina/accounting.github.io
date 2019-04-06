@@ -2,8 +2,8 @@ import { CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot, CanActivateCh
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 
-import * as fromAuth from './store/auth.reducers';
-import * as fromApp from '../store/app.reducers';
+import * as fromAuth from '../../auth/store/auth.reducers';
+import * as fromApp from '../../store/app.reducers';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild{
@@ -12,10 +12,7 @@ export class AuthGuard implements CanActivate, CanActivateChild{
         private _store:Store<fromApp.AppState>,
         private _router: Router){}
     
-    canActivate(router:ActivatedRouteSnapshot,state:RouterStateSnapshot){
-        /**const token = localStorage.getItem("token");
-    // проверяем не истек ли срок действия токена
-    return !this.jwtHelper.isTokenExpired(token); */
+    canActivate(router:ActivatedRouteSnapshot, state:RouterStateSnapshot){
         return this._store.select('auth')
                     .take(1)
                     .map((authState:fromAuth.State)=>{
@@ -29,5 +26,4 @@ export class AuthGuard implements CanActivate, CanActivateChild{
     canActivateChild(router:ActivatedRouteSnapshot,state:RouterStateSnapshot){
         return this.canActivate(router,state);
     }
-
 }

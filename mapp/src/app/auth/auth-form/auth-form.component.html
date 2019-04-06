@@ -1,8 +1,9 @@
-<h4 class="text-xs-center">Sign Up</h4>
+<h4 class="text-xs-center">{{ title }}</h4>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div 
+      *ngIf="!isLogin"
       class="form-group"
-      [ngClass]="{'has-error': form.get('name').invalid && form.get('name').touched }">
+      [ngClass]="{'has-error': errorClass('name') }">
         <label for="name">Name</label>
         <input
             type="text"
@@ -12,16 +13,15 @@
             formControlName="name">
         <span
           class="form-help-text"
-          *ngIf="form.get('name').invalid && form.get('name').touched">
-          <span *ngIf="form.get('name')['errors']['required']">Name must not be empty</span>
-          <span *ngIf="form.get('name')['errors']['minlength'] && form.get('name')['errors']['minlength']['requiredLength']">
-            Password must be more than {{form.get('name')['errors']['minlength']['requiredLength']}} characters
+          *ngIf="errorClass('name')">
+          <span *ngIf="required('name')">Name must not be empty</span>
+          <span *ngIf="invalidLength('name')">
+            Name must be more than {{form.get('name')['errors']['minlength']['requiredLength']}} characters
           </span>
-          <span *ngIf="form.get('name')['errors']['name']">Name isn't correct</span>
         </span>
     </div>
     <div 
-        [ngClass]="{'has-error' : form.get('email').invalid && form.get('email').touched}"
+        [ngClass]="{'has-error' : errorClass('email')}"
         class="form-group">
         <label for="email">Email</label>
         <input
@@ -32,14 +32,16 @@
             placeholder="Enter Email"
             formControlName="email">
         <span 
-            *ngIf="form.get('email').invalid && form.get('email').touched"
+            *ngIf="errorClass('email')"
             class="form-help-text">
-                <span *ngIf="form.get('email')['errors']['required']">Email must not be empty</span>
-                <span *ngIf="form.get('email')['errors']['email']">Email isn't correct</span>
+                <span *ngIf="required('email')">Email must not be empty</span>
+                <span *ngIf="invalidEmail">Email isn't correct</span>
+                <span *ngIf="unknown && isLogin">Unknown email</span>
+                <span *ngIf="unknown && !isLogin">This email is already exist</span>
         </span>
     </div>
     <div
-        [ngClass]="{'has-error' : form.get('password').invalid && form.get('password').touched}"
+        [ngClass]="{'has-error' : errorClass('password')}"
         class="form-group">
         <label for="password">Password</label>
         <input
@@ -50,10 +52,10 @@
             placeholder="Password"
             formControlName="password">
         <span 
-            *ngIf="form.get('password').invalid && form.get('password').touched"
+            *ngIf="errorClass('password')"
             class="form-help-text">
-                <span *ngIf="form.get('password')['errors']['required']">Password must not be empty</span>
-                <span *ngIf="form.get('password')['errors']['minlength'] && form.get('password')['errors']['minlength']['requiredLength']">
+                <span *ngIf="required('password')">Password must not be empty</span>
+                <span *ngIf="invalidLength('password')">
                     Password must be more than {{form.get('password')['errors']['minlength']['requiredLength']}} characters
                 </span>
         </span>
@@ -72,12 +74,7 @@
         <button 
             [disabled]="form.invalid"
             type="submit" 
-            class="btn btn-block btn-primary">Sign Up</button>
+            class="btn btn-block btn-primary">{{ title }}</button>
     </div>
-    <div class="form-group">
-        <p class="text-muted text-xs-center">
-            Already have an account? 
-            <a routerLink="/auth/login">Sing In.</a>
-        </p>
-    </div>
+    <ng-content></ng-content>
 </form>

@@ -7,6 +7,7 @@ import { fromPromise } from 'rxjs/observable/fromPromise';
 
 import * as ArchiveActions from './archive.action';
 import * as EventsActions from './events.actions';
+import * as MessageActions from '../../../store/message.actions';
 import { Archive } from '../shared/models/archive.model';
 
 @Injectable()
@@ -76,7 +77,15 @@ export class ArchiveEffects{
                             mergeMap(()=> [{
                                 type: ArchiveActions.GET_ARCHIVE
                             },{
-                                type: EventsActions.DELETE_EVENTS
+                                type: EventsActions.DELETE_EVENTS,
+                                payload: 'all'
+                            },
+                            {
+                              type: MessageActions.SUCCESS,
+                              payload: {
+                                type: 'SUCCESS',
+                                text: 'Archive was added'
+                              }
                             }])
                         )
             })

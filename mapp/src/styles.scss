@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+.fc-event-container a:not(.btn) span, .fc-event-container a:not(.btn) .fc-title,
+.fc-event-container a:not(.btn) span:hover, .fc-event-container a:not(.btn) .fc-title:hover,
+.fc-event-container a.fc-short .fc-time:before{
+    color:#fff;
+}
+.fc-event.average{
+    background-color: #fbbc2f;
+    border: 1px solid #bb850b;
+}
+.fc-event.high{
+    background-color: #f74949;
+    border: 1px solid #bb0b0b;
+}

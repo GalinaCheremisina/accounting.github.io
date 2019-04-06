@@ -1,18 +1,1 @@
-<div class="row" *ngIf="dayChosen">
-    <app-day-detail 
-        [day]="propDay"
-        (typeView)="changeView($event)"></app-day-detail>
-</div>
-<div class="row" *ngIf="!dayChosen">
-    <div class="title-block">
-        <h3 class="title">
-            Calendar page <span class="sparkline bar"></span>
-        </h3>
-    </div>
-    <ngx-fullcalendar
-        defaultView="month" 
-        [events]="events" 
-        [options]="options"
-        (onDateClick)="onDateClick($event)"
-        (onEventClick)="onEventClick($event)"></ngx-fullcalendar>
-</div> 
+<router-outlet></router-outlet>
