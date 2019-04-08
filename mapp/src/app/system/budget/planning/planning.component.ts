@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store'; 
 
-import { Bill } from '../../shared/models/bill.model';
+import { Bill } from '../shared/models/bill.model';
 import { Category } from '../shared/models/category.model';
 import { EventRecord } from '../shared/models/event.model';
 import * as fromBudget from '../store/budget.reducers';
@@ -30,7 +30,6 @@ export class PlanningComponent implements OnInit, OnDestroy {
       this.events = data.events.events;
       this.isLoaded = true;      
     });
-    console.log('PlanningComponent');
   }
 
   /**Get cost of category */

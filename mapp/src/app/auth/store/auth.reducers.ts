@@ -10,14 +10,12 @@ export interface State{
     token: string;
     authenticated: boolean;
     user: User;
-    error: string;
 }
 
 const initialState: State = {
     token: null,
     authenticated: false,
-    user: null,
-    error: null
+    user: null
 }
 export function authReducer(state = initialState, action: AuthActions.AuthActions){
     switch (action.type){
@@ -25,32 +23,23 @@ export function authReducer(state = initialState, action: AuthActions.AuthAction
         case (AuthActions.SIGNIN):
             return {
                 ...state,
-                authenticated :true,
-                error: null
+                authenticated :true
             };
         case (AuthActions.LOGOUT):
             return {
                 ...state,
                 token: null,
-                authenticated: false,
-                error: null
+                authenticated: false
             };
         case (AuthActions.SET_TOKEN):
             return {
                 ...state,
-                token: action.payload,
-                error: null
+                token: action.payload
             };
         case (AuthActions.SET_USER):
             return {
                 ...state,
-                user: action.payload,
-                error: null
-            };
-        case (AuthActions.FAIL):
-            return {
-                ...state,
-                error: action.payload
+                user: action.payload
             };
 
         default:

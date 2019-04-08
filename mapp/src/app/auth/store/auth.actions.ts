@@ -11,7 +11,6 @@ export const SET_TOKEN = 'SET_TOKEN';
 export const GET_USER = 'GET_USER';
 export const SET_USER = 'SET_USER';
 export const CREATE_USER = 'CREATE_USER';
-export const FAIL = 'FAIL';
 
 export class TrySignup implements Action {
   readonly type = TRY_SIGNUP;
@@ -61,12 +60,6 @@ export class CreateUser implements Action {
     constructor(public payload: {useremail: string, username: string}) {}
 }
 
-export class Fail implements Action {
-    readonly type = FAIL;
-  
-    constructor(public payload: string) {}
-}
-
 export type AuthActions = Signup | 
                           Signin | 
                           Logout | 
@@ -75,5 +68,4 @@ export type AuthActions = Signup |
                           TrySignin |
                           GetUser |
                           SetUser |
-                          CreateUser |
-                          Fail;
+                          CreateUser;

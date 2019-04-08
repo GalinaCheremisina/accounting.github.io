@@ -12,8 +12,6 @@ import { reducers } from './store/app.reducers';
 import { MessageEffects } from './store/message.effects';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserService } from './shared/services/user.service';
-import { AuthService } from './auth/shared/services/auth.service';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { environment } from '../environments/environment';
 import { ErrorInterceptor } from './shared/components/error/error-interceptor';
@@ -43,8 +41,6 @@ import { MessageComponent } from './shared/components/message/message.component'
     EffectsModule.forRoot([MessageEffects])
   ],
   providers: [
-    AuthService,
-    UserService,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],

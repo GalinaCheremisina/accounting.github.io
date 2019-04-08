@@ -9,6 +9,7 @@ import { AuthFormComponent } from './auth-form/auth-form.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { authReducer } from './store/auth.reducers';
 import { AuthEffects } from './store/auth.effects';
+import { AuthService } from './shared/services/auth.service';
 
 @NgModule({ 
     declarations:[
@@ -21,6 +22,9 @@ import { AuthEffects } from './store/auth.effects';
         SharedModule,
         StoreModule.forFeature('auth', authReducer),
         EffectsModule.forFeature([AuthEffects])
+    ],
+    providers: [
+      AuthService
     ]
-})
+}) 
 export class AuthModule{}
