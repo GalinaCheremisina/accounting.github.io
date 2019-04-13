@@ -19,6 +19,7 @@ import { AuthGuard } from './shared/services/auth-guard.service';
 import { HomePageComponent } from './home-page/home-page.component';
 import { ErrorComponent } from './shared/components/error/error.component';
 import { MessageComponent } from './shared/components/message/message.component';
+import { AuthService } from './auth/shared/services/auth.service';
 
 @NgModule({
   declarations: [
